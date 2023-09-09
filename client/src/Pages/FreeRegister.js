@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import Img1 from "../Images/Doctors/article3.jpeg";
 import { Link } from 'react-router-dom';
 import { Country, State, City } from "country-state-city";
-import { FILE_URL, JSON_HEADER, UserHandler } from "../utils/Const";
+import { CreateCommunityUser, FILE_URL, JSON_HEADER, UserHandler } from "../utils/Const";
 import { useDispatch,useSelector } from "react-redux";
 import { setUserBasic, setUserData } from "../Redux/Actions";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ const FreeRegister = () => {
         setImg(FILE_URL+MasterData.signupData.login)
       }
     },[MasterData])
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let data = {
@@ -48,13 +48,63 @@ const FreeRegister = () => {
             status: 1,
           };
       
-          fetch(UserHandler, {
+        const firstName = name.split(' ').slice(0, -1).join(' ');
+        const lastName = name.split(' ').slice(-1).join(' ');
+        let communityUserData = {
+            account: {
+                username: email, //do we have username data
+                email,
+                status: mobile,
+                tagsField : [
+                "HumHub"
+                ],
+                language: "",
+                authclient: "local"
+            },
+            profile: {
+                firstName,
+                lastName,
+                // title: "Test user",
+                // gender: "male",
+                // street: streetAddress,
+                zip: zipcode,
+                city,
+                country,
+                state,
+                // birthday_hide_year: 0,
+                // birthday: "1990-01-01",
+                // about: "string",
+                // phone_private: "string",
+                // phone_work: "string",
+                mobile: mobile,
+            },
+            password: {
+                newPassword: password,
+                mustChangePassword: false
+            }
+        };
+
+        fetch(CreateCommunityUser, {
+            method: "POST",
+            headers: JSON_HEADER,
+            body: JSON.stringify(communityUserData),
+            }).then((res) => {
+            if (res.ok) {
+                res.json()
+                .then(res => res)
+                .catch((err) => {
+                NotificationManager.error("An Error creating your account with the community site.")
+                })
+            }
+        });
+
+        fetch(UserHandler, {
             method: "POST",
             headers: JSON_HEADER,
             body: JSON.stringify(data),
-          }).then((res) => {
+            }).then((res) => {
             if (res.ok) {
-              res.json().then((d) => {
+                res.json().then((d) => {
                 let data = d.data;
                 setName("");
                 setEmail("");
@@ -70,9 +120,9 @@ const FreeRegister = () => {
                 NotificationManager.success("Signup success welcome!")
                 navigate("/");
                 localStorage.setItem("user",JSON.stringify(data))
-              });
+                });
             }
-          });
+        });
     };
 
     return (

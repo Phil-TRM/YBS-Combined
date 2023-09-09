@@ -6,6 +6,7 @@ const path = require("path");
 const SendMail = require("../../util/sendEmail");
 const ResetToken = require("./../../Modals/ResetPaswordModal");
 const { log } = require("console");
+const createCommunityUser = require("../../util/createCommunityUser");
 
 router.post("/", async (req, res) => {
   try {
@@ -71,6 +72,55 @@ router.post("/", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+router.post("/community-user", async (req, res) => {
+  try {
+    const { email, mobileNumber, password, _id } = req.body;
+
+    if (_id != null) {
+      const byID = await Authentication.findById({ _id: _id });
+      if (byID != null) {
+        res.send({
+          message: "User Found",
+          isNeedLogin:true,
+          data: byID,
+        });
+        return;
+      }
+    }
+
+    const byName = await Authentication.findOne({ mobileNumber: mobileNumber });
+    if (byName != null) {
+      res.send({
+        message: "User Found",
+        isNeedLogin:true,
+        data: byName,
+      });
+      return;
+    }
+    const byEmail = await Authentication.findOne({ email: email });
+    if (byEmail != null) {
+      res.send({
+        message: "User Found",
+        isNeedLogin:true,
+        data: byEmail,
+      });
+      return;
+    }
+
+    let data = req.body;
+    data.status = 0;
+    bcrypt.genSalt().then((salt) => {
+      bcrypt.hash(password.newPassword, salt).then(async (hash) => {
+        req.body.password.newPassword = hash;
+        createCommunityUser(req.body).then(res => res)
+      });
+    });
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
 router.post("/check-exits",async(req,res)=>{
   try {
     const { email, mobileNumber } = req.body;
