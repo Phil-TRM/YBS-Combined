@@ -3,7 +3,8 @@ import Img1 from "../Images/Doctors/doctor1.webp";
 import { Link } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 import { Checkbox, Modal, Typography } from "@mui/material";
-import { CLIENT_ID, CheckExits, CreateCommunityUser, FILE_URL, Historyhandlers, JSON_HEADER, UserHandler } from "../utils/Const";
+import { CLIENT_ID, CheckExits, FILE_URL, Historyhandlers, JSON_HEADER, UserHandler } from "../utils/Const";
+import { handleNewCommunityUser } from "../utils/CreateCommunityUserUtil"
 import { useDispatch, useSelector } from "react-redux";
 import { setUserBasic, setUserData } from "../Redux/Actions";
 import { useNavigate } from "react-router-dom";
@@ -114,7 +115,7 @@ const Register = () => {
   useEffect(() => {
     if (success) {
       NotificationManager.success("Payment successful!!")
-      handleNewCommunityUser();
+      handleNewCommunityUser({name, email, password, plan});
       handleUserCreation();
     }
   }, [success]);
@@ -130,8 +131,8 @@ const Register = () => {
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.ok) {
-          NotificationManager.warning("Account already exists please login");
-         setSubmitEnable(false)
+          // NotificationManager.warning("Account already exists please login");
+         setSubmitEnable(true)
         }else{
           setSubmitEnable(true)
           throw new Error('Something went wrong');
@@ -172,61 +173,8 @@ const Register = () => {
     
   },[mobile])
 
-  //untested but should work the same as free register.
-  const handleNewCommunityUser = () => {
-    console.log("New Community User")
-    const firstName = name.split(' ').slice(0, -1).join(' ');
-    const lastName = name.split(' ').slice(-1).join(' ');
-    let data = {
-      account: {
-        username: email, //do we have username data
-        email,
-        status: mobile,
-        tagsField : [
-          "HumHub"
-        ],
-        language: "",
-        authclient: "local"
-      },
-      profile: {
-        firstName,
-        lastName,
-        // title: "Test user",
-        // gender: "male",
-        street: streetAddress,
-        zip: zipcode,
-        city,
-        country,
-        state,
-        // birthday_hide_year: 0,
-        // birthday: "1990-01-01",
-        // about: "string",
-        // phone_private: "string",
-        // phone_work: "string",
-        mobile: mobile,
-      },
-      password: {
-        newPassword: password,
-        mustChangePassword: false
-      }
-    };
-
-    fetch(CreateCommunityUser, {
-      method: "POST",
-      headers: JSON_HEADER,
-      body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.ok) {
-        res.json()
-        .then(res => res)
-        .catch((err) => {
-          NotificationManager.error("An Error creating your account with the community site.")
-        })
-      }
-    });
-  };
-
   const handleUserCreation = () => {
+    console.log('here')
     let data = {
       name: name,
       email: email,
