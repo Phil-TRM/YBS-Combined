@@ -1,6 +1,7 @@
 import react, { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FILE_URL } from "../../utils/Const";
+import { useHref } from "react-router";
 const Slider = () => {
     const MasterData = useSelector(state=>state.handleMasterData)
     const Userdata=useSelector(state=>state.handleUserData)
@@ -42,7 +43,12 @@ const Slider = () => {
                             <h1 tabIndex="0" className="text-[#452a72] text-4xl lg:text-6xl font-black mb-8">{head2}</h1>
                             <p tabIndex="0" className="text-gray-800 font-regular mb-8">{para}</p>
                           
+
+                            <img src="Mary-Regan-black-high-res.png" alt="Signature" width="300" height="234"/>
+                            
+
                         </div>
+                        
                     </div>
                 </div>
             </section>
