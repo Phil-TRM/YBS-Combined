@@ -115,7 +115,7 @@ const Register = () => {
   useEffect(() => {
     if (success) {
       NotificationManager.success("Payment successful!!")
-      handleNewCommunityUser({name, email, password, plan});
+      // handleNewCommunityUser({name, email, password, plan});
       handleUserCreation();
     }
   }, [success]);

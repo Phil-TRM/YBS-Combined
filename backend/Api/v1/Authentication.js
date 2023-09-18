@@ -7,6 +7,7 @@ const SendMail = require("../../util/sendEmail");
 const ResetToken = require("./../../Modals/ResetPaswordModal");
 const { log } = require("console");
 const createCommunityUser = require("../../util/createCommunityUser");
+const loginCommunityUser = require("../../util/loginCommunityUser");
 
 router.post("/", async (req, res) => {
   try {
@@ -72,7 +73,6 @@ router.post("/", async (req, res) => {
     res.sendStatus(500);
   }
 });
-
 router.post("/community-user", async (req, res) => {
   try {
     const { email, mobileNumber, password, _id } = req.body;
@@ -120,7 +120,6 @@ router.post("/community-user", async (req, res) => {
     res.sendStatus(500);
   }
 });
-
 router.post("/check-exits",async(req,res)=>{
   try {
     const { email, mobileNumber } = req.body;
@@ -285,6 +284,14 @@ router.post("/login", async (req, res) => {
     } else {
       res.status(401).send({ message: "Not Found" });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "Some Error" });
+  }
+});
+router.post("/community-login", async (req, res) => {
+  try {
+    loginCommunityUser(req.body).then(res => res);
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: "Some Error" });

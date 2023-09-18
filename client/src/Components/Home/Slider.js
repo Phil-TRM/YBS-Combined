@@ -18,6 +18,11 @@ const Slider = () => {
         setName(Userdata.name);
     },[Basic])
 
+    // Uncomment when community login is fully flushed out
+    // useEffect(()=> {
+    //     checkCommunityLoginStatus()
+    // },[])
+
     useLayoutEffect(()=>{
         if(MasterData.homeData!=null){
             let data =  MasterData.homeData;

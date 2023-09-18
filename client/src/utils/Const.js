@@ -36,6 +36,7 @@ export const UserHandler = API_VERSION_URL+"/auth";
 export const CreateCommunityUser = API_VERSION_URL+"/auth/community-user";
 export const CheckExits = API_VERSION_URL+"/auth/check-exits";
 export const LoginUser = API_VERSION_URL+"/auth/login";
+export const LoginCommunityUser = API_VERSION_URL + "/auth/community-login";
 export const SetUserDp = API_VERSION_URL+"/auth/dp";
 export const ResetPassword = API_VERSION_URL+"/auth/reset-password";
 export const VerifiyEmail = API_VERSION_URL+"/auth/verify-email";

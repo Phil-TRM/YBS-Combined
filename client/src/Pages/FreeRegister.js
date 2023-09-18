@@ -49,7 +49,7 @@ const FreeRegister = () => {
             status: 1,
           };
       
-        handleNewCommunityUser({name, email, password})
+        // handleNewCommunityUser({name, email, password})
         fetch(UserHandler, {
             method: "POST",
             headers: JSON_HEADER,
