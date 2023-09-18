@@ -131,8 +131,8 @@ const Register = () => {
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.ok) {
-          // NotificationManager.warning("Account already exists please login");
-         setSubmitEnable(true)
+          NotificationManager.warning("Account already exists please login");
+          setSubmitEnable(false)
         }else{
           setSubmitEnable(true)
           throw new Error('Something went wrong');
@@ -174,7 +174,6 @@ const Register = () => {
   },[mobile])
 
   const handleUserCreation = () => {
-    console.log('here')
     let data = {
       name: name,
       email: email,
