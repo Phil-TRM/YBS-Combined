@@ -24,7 +24,14 @@ const CategoryTable = () => {
     const Dispatch = useDispatch();
     useLayoutEffect(()=>{
         if(MasterData.categroies!=null){
-            setData(MasterData.categroies)
+            let temp = [];
+            for (let i = 0; i < MasterData.categroies.length; i++) {
+                const element = MasterData.categroies[i];
+                if(element.cateType==null){
+                    temp.push(element)
+                }
+            }
+            setData(temp)
         }
     },[MasterData])
 
@@ -77,7 +84,7 @@ const CategoryTable = () => {
 
     const formatDate=(string)=>{
         return moment(string).format('DD MMM, YYYY');
-     }
+    }
 
     return (
         <div className="bg-white shadow px-4 md:px-10 pt-4 md:pt-7 pb-5 overflow-y-auto">

@@ -68,9 +68,12 @@ export default function AddCat({ open, setOpen }) {
             let arr = new Array();
             for (let i = 0; i < MasterData.categroies.length; i++) {
                 const element = MasterData.categroies[i];
-                if(element.pid==null){
-                    arr.push(element)
+                if(element.cateType==null){
+                    if(element.pid==null){
+                        arr.push(element)
+                    }
                 }
+              
             }
             setData(arr)
         }
