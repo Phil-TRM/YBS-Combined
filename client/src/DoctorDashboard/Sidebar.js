@@ -19,8 +19,20 @@ export default function Sidebar({ Outlet }) {
   const MasterData = useSelector((state) => state.handleMasterData);
   const Dispatch = useDispatch();
   const [userData, setUserDatas] = useState(UserData);
+  const [userTypeInStr,setUserTypeInStr]=useState("patient")
 
   useLayoutEffect(() => {
+    switch(UserData.userType){
+      case 0 : setUserTypeInStr("patient");
+      break
+      case 1 : setUserTypeInStr("doctor");
+      break
+      case 2: {
+        setUserTypeInStr("admin");
+      }
+      break
+            default : setDashboard(false);
+    }
     if (UserData.userType != null) {
       setAdmin(UserData.userType);
     }
@@ -53,7 +65,7 @@ export default function Sidebar({ Outlet }) {
       >
         <div className="flex flex-no-wrap">
           {/* Sidebar starts */}
-          <div className="absolute lg:relative w-64  h-screen shadow bg-gray-100 hidden lg:block">
+          <div style={{height:"100%",minHeight:"100vh"}} className="absolute lg:relative w-64  shadow bg-gray-100 hidden lg:block">
             <div
               onClick={() => navigate("/")}
               className="h-16 w-full flex  items-center px-8 cursor-pointer "
@@ -893,7 +905,7 @@ export default function Sidebar({ Outlet }) {
                           <ul className="p-2 w-full border-r bg-white absolute rounded left-0 shadow mt-12 sm:mt-16 ">
                             <li className="flex w-full justify-between text-[#7963a7] hover:text-[#452a72] cursor-pointer items-center">
                               <div
-                                onClick={() => navigate("/doctor/profile")}
+                                onClick={() => navigate("/"+userTypeInStr+"/profile")}
                                 className="flex items-center"
                               >
                                 <svg
@@ -1012,7 +1024,7 @@ export default function Sidebar({ Outlet }) {
             <div
               className="container mx-auto py-2 md:w-5/5 w-12/12 px-2"
               style={{
-                maxHeight: "85vh",
+                maxHeight: "95vh",
                 overflowY: "scroll",
                 msOverflowStyle: "none",
               }}

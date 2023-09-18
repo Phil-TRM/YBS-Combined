@@ -12,10 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormatDate, GetQuestions } from "../utils/Const";
 import { setQuistions } from "../Redux/Actions";
 import { NotificationManager } from "react-notifications";
+import PendingIcon from '@mui/icons-material/Pending';
 
 function DoctorQuestionsPage() {
-    const Basic = useSelector(state=>state.handleUserBasicData);
-    const Questions = useSelector(state=>state.QandA);
+    const Basic = useSelector(state => state.handleUserBasicData);
+    const Questions = useSelector(state => state.QandA);
     const Dispatch = useDispatch();
     const navigate = useNavigate()
     const [questions, setQuestionsData] = useState([]);
@@ -27,18 +28,18 @@ function DoctorQuestionsPage() {
     const [showReplied, setShowReplied] = useState(false); // New state variable for filtering
 
 
-    useLayoutEffect(()=>{
-        if(Questions.length>0){
+    useLayoutEffect(() => {
+        if (Questions.length > 0) {
             setQuestionsData(Questions)
-        }else{
-            GetQuestions().then(d=>{
-    
-                if(d!=null){
+        } else {
+            GetQuestions().then(d => {
+
+                if (d != null) {
                     Dispatch(setQuistions(d.data))
                 }
             })
         }
-    },[Questions])
+    }, [Questions])
 
     const toggleShowReplied = () => {
         setShowReplied((prevShowReplied) => !prevShowReplied);
@@ -68,18 +69,18 @@ function DoctorQuestionsPage() {
         return true;
     });
 
-    const handleRepliedByMe=(data)=>{
-        if(data.replies.length>0){
+    const handleRepliedByMe = (data) => {
+        if (data.replies.length > 0) {
             for (let index = 0; index < data.replies.length; index++) {
                 const element = data.replies[index];
-                if(element.userData._id==Basic.uid){
+                if (element.userData._id == Basic.uid) {
                     return "Yes"
-                }else{
+                } else {
                     return "No"
                 }
-                
+
             }
-        }else{
+        } else {
             return "No"
         }
     }
@@ -91,7 +92,7 @@ function DoctorQuestionsPage() {
                     <div className="sm:flex items-center justify-between">
                         <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">Questions</p>
                         <div>
-                           
+
 
                             <div className="flex items-center space-x-4 mb-4">
                                 <input
@@ -182,21 +183,39 @@ function DoctorQuestionsPage() {
                                     </td>
 
                                     <td className="px-7 2xl:px-0">
-                                        <Tooltip content="Answer this question">
-                                            <IconButton
-                                                variant="text"
-                                                color="blue-gray"
-                                                onClick={() =>{
-                                                    if(cur.isAnsweringEnabled){
-                                                        handleEditNote(cur._id)
-                                                    }else{
-                                                        NotificationManager.error("Replies is closed for this questions.")
-                                                    }
-                                                }}
-                                            >
-                                                <PencilIcon className="h-5 w-5" />
-                                            </IconButton>
-                                        </Tooltip>
+                                        {
+                                            cur.status === 1 ? 
+
+                                                <Tooltip content="Answer this question">
+                                                    <IconButton
+                                                        variant="text"
+                                                        color="blue-gray"
+                                                        onClick={() => {
+                                                            if (cur.isAnsweringEnabled) {
+                                                                handleEditNote(cur._id)
+                                                            } else {
+                                                                NotificationManager.error("Replies is closed for this questions.")
+                                                            }
+                                                        }}
+                                                    >
+                                                        <PencilIcon className="h-5 w-5" />
+                                                    </IconButton>
+                                                </Tooltip>
+                                                   
+                                                
+                                                 :
+                                                <Tooltip content="Waiting For Admin Confirmation">
+                                                    <IconButton
+                                                        variant="text"
+                                                        color="blue-gray"
+
+                                                    >
+                                                        <PendingIcon className="h-5 w-5" />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            
+                                        }
+
 
                                     </td>
                                 </tr>
