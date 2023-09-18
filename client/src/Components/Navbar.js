@@ -178,7 +178,7 @@ function Navbar() {
               </Link>
               {isLogin && 
                 <Link
-                  className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
+                  className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
                   to="https://communities.yourbestself-ie.com/user/auth/login"
                   onClick={handleMenuToggle}
                   target='_blank'
