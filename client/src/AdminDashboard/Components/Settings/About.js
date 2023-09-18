@@ -9,7 +9,7 @@ const About = () => {
   const MasterData=useSelector(state=>state.handleMasterData);
   const Basic=useSelector(state=>state.handleUserBasicData);
   const Dispatch = useDispatch();
-  const [aboutHeroImage, setAboutHeroImage] = useState('');
+  const [aboutHeroImage, setAboutHeroImage] = useState(null);
   const [aboutFirstHeading, setAboutFirstHeading] = useState('');
   const [aboutFirstParagraph, setAboutFirstParagraph] = useState('');
   const [aboutSecondHeading, setAboutSecondHeading] = useState('');
@@ -47,6 +47,10 @@ const About = () => {
 
   const handleSubmit=()=>{
         const fd =  new FormData();
+        if(aboutHeroImage==null){
+          NotificationManager.error("Please select a hero image.")
+          return
+        }
         fd.append("heroImage",aboutHeroImage);
         fd.append("heading",aboutFirstHeading);
         fd.append("para",aboutFirstParagraph);
