@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 import { Checkbox, Modal, Typography } from "@mui/material";
 import { CLIENT_ID, CheckExits, FILE_URL, Historyhandlers, JSON_HEADER, UserHandler } from "../utils/Const";
+import { handleNewCommunityUser } from "../utils/CreateCommunityUserUtil"
 import { useDispatch, useSelector } from "react-redux";
 import { setUserBasic, setUserData } from "../Redux/Actions";
 import { useNavigate } from "react-router-dom";
@@ -114,6 +115,7 @@ const Register = () => {
   useEffect(() => {
     if (success) {
       NotificationManager.success("Payment successful!!")
+      // handleNewCommunityUser({name, email, password, plan});
       handleUserCreation();
     }
   }, [success]);
@@ -130,7 +132,7 @@ const Register = () => {
       }).then((res) => {
         if (res.ok) {
           NotificationManager.warning("Account already exists please login");
-         setSubmitEnable(false)
+          setSubmitEnable(false)
         }else{
           setSubmitEnable(true)
           throw new Error('Something went wrong');

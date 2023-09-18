@@ -6,6 +6,8 @@ const path = require("path");
 const SendMail = require("../../util/sendEmail");
 const ResetToken = require("./../../Modals/ResetPaswordModal");
 const { log } = require("console");
+const createCommunityUser = require("../../util/createCommunityUser");
+const loginCommunityUser = require("../../util/loginCommunityUser");
 
 router.post("/", async (req, res) => {
   try {
@@ -57,14 +59,61 @@ router.post("/", async (req, res) => {
               data: data,
             });
             const resetPasswordUrl = `${process.env.CLINT_URL}/email-verify/${data._id}`;
-            const message = `We are delighted to inform you that your account created to Doctor Blog was successful! \n\n Plese verify your email by clicking this link \n\n ${resetPasswordUrl}`;
+            const message = `We are delighted to inform you that your account has been created at Your Best SELF-IE! \n\n Plese verify your email by clicking this link \n\n ${resetPasswordUrl}`;
             await SendMail({
               email: data.email,
-              subject: "Account created succesfully for Doctor Blogs",
+              subject: "Account created succesfully for Your Best SELF-IE",
               message
             });
           }
         });
+      });
+    });
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+router.post("/community-user", async (req, res) => {
+  try {
+    const { email, mobileNumber, password, _id } = req.body;
+
+    if (_id != null) {
+      const byID = await Authentication.findById({ _id: _id });
+      if (byID != null) {
+        res.send({
+          message: "User Found",
+          isNeedLogin:true,
+          data: byID,
+        });
+        return;
+      }
+    }
+
+    const byName = await Authentication.findOne({ mobileNumber: mobileNumber });
+    if (byName != null) {
+      res.send({
+        message: "User Found",
+        isNeedLogin:true,
+        data: byName,
+      });
+      return;
+    }
+    const byEmail = await Authentication.findOne({ email: email });
+    if (byEmail != null) {
+      res.send({
+        message: "User Found",
+        isNeedLogin:true,
+        data: byEmail,
+      });
+      return;
+    }
+
+    let data = req.body;
+    data.status = 0;
+    bcrypt.genSalt().then((salt) => {
+      bcrypt.hash(password.newPassword, salt).then(async (hash) => {
+        req.body.password.newPassword = hash;
+        createCommunityUser(req.body).then(res => res)
       });
     });
   } catch (error) {
@@ -132,7 +181,7 @@ router.put("/", async (req, res) => {
           email: user.email,
           subject: "Admin update.",
           message:
-            "We are delighted to inform you that your are now admin of doctor blog",
+            "We are delighted to inform you that your are now admin of Your Best SELF-IE",
         });
       }
       if(emailType=="Reject"){
@@ -140,7 +189,7 @@ router.put("/", async (req, res) => {
           email: user.email,
           subject: "Admin update.",
           message:
-            "We are sorry to inform you that your account not accepted for doctor blog",
+            "We are sorry to inform you that your account not accepted for Your Best SELF-ie",
         });
       }
     } else {
@@ -217,9 +266,9 @@ router.post("/login", async (req, res) => {
               res.send({ data: data });
               await SendMail({
                 email: data.email,
-                subject: "Login Confirmation for Doctor Blogs",
+                subject: "Login Confirmation for Your Best SELF-IE",
                 message:
-                  "We are delighted to inform you that your login to Doctor Blog was successful! Welcome back to our platform.",
+                  "We are delighted to inform you that your login to Your Best SELF-IE was successful! Welcome back to our platform.",
               });
             } else {
               res.status(401).send({ message: "Not Found" });
@@ -240,6 +289,14 @@ router.post("/login", async (req, res) => {
     res.status(500).send({ error: "Some Error" });
   }
 });
+router.post("/community-login", async (req, res) => {
+  try {
+    loginCommunityUser(req.body).then(res => res);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: "An Error occured while retrieving authentication details from the community site." });
+  }
+});
 router.post("/reset-password", async (req, res) => {
   try {
     const { email } = req.body;
@@ -253,13 +310,13 @@ router.post("/reset-password", async (req, res) => {
           res.sendStatus(500);
         } else {
           const resetPasswordUrl = `${process.env.CLINT_URL}/password/reset/${data._id}`;
-          const message = `Your Password reset Password token iss:- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then,please ignore it`;
+          const message = `Your Password reset Password token is:- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then,please ignore it`;
           res.send({
             message: "Link for reseting password sent to your email.",
           });
           await SendMail({
             email: email,
-            subject: `Password Recovery for Doctor Blogs`,
+            subject: `Password Recovery for Your Best SELF-IE`,
             message,
           });
         }
@@ -295,9 +352,9 @@ router.put("/reset-password", async (req, res) => {
             });
             await SendMail({
               email: data.email,
-              subject: "Password changed succesfully for Doctor Blogs",
+              subject: "Password changed succesfully for Your Best SELF-IE",
               message:
-                "We are delighted to inform you that your login password changed for Doctor Blog was successful!",
+                "We are delighted to inform you that your login password changed for Your Best SELF-IE was successful!",
             });
           } else {
             res.sendStatus(500);
@@ -326,9 +383,9 @@ router.post("/verify-email", async (req, res) => {
       });
       await SendMail({
         email: data.email,
-        subject: "Email verified succesfully for Doctor Blogs",
+        subject: "Email verified succesfully for Your Best SELF-IE",
         message:
-          "We are delighted to inform you that your email varification for Doctor Blog was successful!",
+          "We are delighted to inform you that your email varification for Your Best SELF-IE was successful!",
       });
     }else{
       res.sendStatus(500);
@@ -361,7 +418,7 @@ router.post("/change-pasword", async (req, res) => {
                   email: data.email,
                   subject: "Password Changed",
                   message:
-                    "We are delighted to inform you that your password for Doctor Blog was successfuly changed!",
+                    "We are delighted to inform you that your password for Your Best SELF-IE was successfuly changed!",
                 });
               }
             });
@@ -466,7 +523,5 @@ return dates;
 
 
 }
-
-
 
 module.exports = router;

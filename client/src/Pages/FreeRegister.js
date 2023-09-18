@@ -3,6 +3,7 @@ import Img1 from "../Images/Doctors/article3.jpeg";
 import { Link } from 'react-router-dom';
 import { Country, State, City } from "country-state-city";
 import { FILE_URL, JSON_HEADER, UserHandler } from "../utils/Const";
+import { handleNewCommunityUser } from "../utils/CreateCommunityUserUtil"
 import { useDispatch,useSelector } from "react-redux";
 import { setUserBasic, setUserData } from "../Redux/Actions";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +30,7 @@ const FreeRegister = () => {
         setImg(FILE_URL+MasterData.signupData.login)
       }
     },[MasterData])
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let data = {
@@ -48,13 +49,14 @@ const FreeRegister = () => {
             status: 1,
           };
       
-          fetch(UserHandler, {
+        // handleNewCommunityUser({name, email, password})
+        fetch(UserHandler, {
             method: "POST",
             headers: JSON_HEADER,
             body: JSON.stringify(data),
-          }).then((res) => {
+            }).then((res) => {
             if (res.ok) {
-              res.json().then((d) => {
+                res.json().then((d) => {
                 let data = d.data;
                 setName("");
                 setEmail("");
@@ -70,9 +72,9 @@ const FreeRegister = () => {
                 NotificationManager.success("Signup success welcome!")
                 navigate("/");
                 localStorage.setItem("user",JSON.stringify(data))
-              });
+                });
             }
-          });
+        });
     };
 
     return (
