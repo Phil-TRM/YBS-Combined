@@ -8,7 +8,7 @@ export const APP_SECRET =
   "EF2AWaa62jQRoAwKv1Gt5iZk3qoWAoElScR0bVgBPDxA_rbZLYvGXU_jSrM9oD6o4n6gbVXgcZFdswTW";
 
 // API Handles
-export const BaseUrl = "http://localhost:3001";
+export const BaseUrl = "https://backened.yourbestself-ie.com";
 // export const BaseUrl = "http://api.sanzdesk.co";
 export const API_VERSION_URL = BaseUrl + "/api/v1";
 export const FILE_URL = BaseUrl + "/api/v1/";
@@ -35,17 +35,15 @@ export const HandleSign = API_VERSION_URL + "/settings/sign";
 export const HandlePricing = API_VERSION_URL + "/settings/pricing";
 
 //Authentication Api
-export const UserHandler = API_VERSION_URL+"/auth";
-export const CreateCommunityUser = API_VERSION_URL+"/auth/community-user";
-export const CheckExits = API_VERSION_URL+"/auth/check-exits";
-export const LoginUser = API_VERSION_URL+"/auth/login";
-export const LoginCommunityUser = API_VERSION_URL + "/auth/community-login";
-export const SetUserDp = API_VERSION_URL+"/auth/dp";
-export const ResetPassword = API_VERSION_URL+"/auth/reset-password";
-export const VerifiyEmail = API_VERSION_URL+"/auth/verify-email";
-export const ChangePassword = API_VERSION_URL+"/auth/change-pasword";
-export const PostCreated = API_VERSION_URL+"/auth/post-created";
-export const PlanExpired = API_VERSION_URL+"/auth/plan-expired"
+export const UserHandler = API_VERSION_URL + "/auth";
+export const CheckExits = API_VERSION_URL + "/auth/check-exits";
+export const LoginUser = API_VERSION_URL + "/auth/login";
+export const SetUserDp = API_VERSION_URL + "/auth/dp";
+export const ResetPassword = API_VERSION_URL + "/auth/reset-password";
+export const VerifiyEmail = API_VERSION_URL + "/auth/verify-email";
+export const ChangePassword = API_VERSION_URL + "/auth/change-pasword";
+export const PostCreated = API_VERSION_URL + "/auth/post-created";
+export const PlanExpired = API_VERSION_URL + "/auth/plan-expired";
 
 //Post
 export const POST_HANDLER = API_VERSION_URL + "/post";
