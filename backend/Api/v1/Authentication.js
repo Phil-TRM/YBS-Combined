@@ -310,7 +310,7 @@ router.post("/reset-password", async (req, res) => {
           res.sendStatus(500);
         } else {
           const resetPasswordUrl = `${process.env.CLINT_URL}/password/reset/${data._id}`;
-          const message = `Your Password reset Password token iss:- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then,please ignore it`;
+          const message = `Your Password reset Password token is:- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then,please ignore it`;
           res.send({
             message: "Link for reseting password sent to your email.",
           });
@@ -352,7 +352,7 @@ router.put("/reset-password", async (req, res) => {
             });
             await SendMail({
               email: data.email,
-              subject: "Password changed succesfully for Doctor Blogs",
+              subject: "Password changed succesfully for Your Best SELF-IE",
               message:
                 "We are delighted to inform you that your login password changed for Your Best SELF-IE was successful!",
             });
