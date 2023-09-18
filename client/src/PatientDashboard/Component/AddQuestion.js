@@ -12,7 +12,7 @@ function AddQuestion() {
     const Dispatch =  useDispatch();
 
     const [question, setQuestion] = useState("");
-    const [category, setCategory] = useState("64f6f56bb7c531607f77a2b7");
+    const [category, setCategory] = useState("");
     const [cate, setCateData] = useState([]);
 
     useLayoutEffect(()=>{
@@ -95,10 +95,10 @@ function AddQuestion() {
                                                 value={category}
                                                 onChange={handleCategoryChange}
                                             >
-                                                <option selected disabled value="">Select category</option>
+                                                <option disabled value={""}  >Select category</option>
                                                 {
                                                     cate.map((data,index)=>{
-                                                        return  <option key={index} value={data._id}>{data.name}</option>
+                                                        return( <option key={index} value={data._id}>{data.name}</option>)
                                                     })
                                                 }
                                             </select>
