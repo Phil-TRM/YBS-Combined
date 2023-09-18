@@ -53,6 +53,13 @@ function AdminQuickNotes() {
         DeleteNotes(id).then(d=>{
             if(d!=null){
                 NotificationManager.success("Deleted Successfully");
+                GetNotes().then(d=>{
+                    if(d!=null){
+                        Dispatch(setNotes(d.data))
+                    }else{
+                        setNote([])
+                    }
+                })
             }
         })
      };
@@ -67,7 +74,7 @@ function AdminQuickNotes() {
 
 
     const filteredData = notes.filter((item) => {
-        const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || item.category.toLowerCase().includes(searchQuery.toLowerCase()) || item.creator.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = item?.title.toLowerCase().includes(searchQuery.toLowerCase()) || item.category.toLowerCase().includes(searchQuery.toLowerCase()) || item.creator.toLowerCase().includes(searchQuery.toLowerCase());
 
 
         const createdAtParts = item.createdAt;
@@ -195,7 +202,7 @@ function AdminQuickNotes() {
                                     </td>
 
                                     <td className="px-7 2xl:px-0">
-                                        <Tooltip content="Edit Post">
+                                        {/* <Tooltip content="Edit Post">
                                             <IconButton
                                                 variant="text"
                                                 color="blue-gray"
@@ -203,7 +210,7 @@ function AdminQuickNotes() {
                                             >
                                                 <PencilIcon className="h-5 w-5" />
                                             </IconButton>
-                                        </Tooltip>
+                                        </Tooltip> */}
                                         <Tooltip content="Delete Post">
                                             <IconButton
                                                 variant="text"
@@ -219,9 +226,9 @@ function AdminQuickNotes() {
                         </tbody>
                     </table>
                     <Dialog open={isDialogOpen} onClose={handleToggleDialog}>
-                        <DialogTitle>{selectedNote && notes.find(note => note.id === selectedNote).title}</DialogTitle>
+                        <DialogTitle>{selectedNote && notes.find(note => note._id === selectedNote)?.title}</DialogTitle>
                         <DialogContent>
-                            {selectedNote && notes.find(note => note.id === selectedNote).description}
+                            {selectedNote && notes.find(note => note._id === selectedNote)?.para}
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleToggleDialog}>Close</Button>

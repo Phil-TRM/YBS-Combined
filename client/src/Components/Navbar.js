@@ -44,13 +44,11 @@ function Navbar() {
     if(UserData!=null){
       if(UserData.status==1){
         setVerified(true);
+        setDashboard(true);
+      }else{
+        setDashboard(false)
       }
       setEmailVerified(UserData.isEmailVerified);
-    }
-
-    if(isDashBoardEnable){
-      setVerified(true);
-      setEmailVerified(true)
     }
   },[UserData,MasterData])
 
@@ -59,13 +57,13 @@ function Navbar() {
   };
   const handleLogOut =()=>{
     localStorage.clear();
-    Dispatch(setUserData({}))
+    Dispatch(setUserData({null:null}))
     Dispatch(setUserBasic({isLogin:false,userType:0}))
     navigate("/")
   }
   return (
     <div className="container px-8 mx-auto xl:px-5 max-w-screen-lg py-5 lg:py-8">
-      <nav className="flex justify-center">
+      <nav className="flex justify-end sm:justify-center">
         <div className="flex flex-wrap justify-between md:flex-nowrap md:gap-10">
           <div className="order-1 hidden w-full flex-col items-center justify-start md:order-none md:flex md:w-auto md:flex-1 md:flex-row md:justify-end">
             <Link
@@ -87,26 +85,12 @@ function Navbar() {
             >
               Material
             </Link>
-            {isLogin && 
-              <Link
-                className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
-                to="https://communities.yourbestself-ie.com/user/auth/login"
-                target='_blank'
-                style={{display:isUserVerified?"flex":"none"}}
-              >
-                Communities
-              </Link> 
-            }
-            <Link
-              className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
-              to="/pricing"
-              style={{display:isEmailVerified?"none":"none"}}
-            >
-              Pricing
-            </Link>
+        
+            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to={isLogin?"/doctors":"/login"}  style={{display:isUserVerified?"flex":"none"}}>Doctors</Link>
+
           </div>
           <div className="flex w-full items-center justify-between md:w-auto">
-            <Link className="w-28 dark:hidden" to="/">
+            <Link className="w-28 dark:hidden hidden sm:block" to="/">
               <img
                 alt="Logo"
                 width="132"
@@ -138,13 +122,13 @@ function Navbar() {
               </svg>
             </button>
           </div>
-          <div className="order-3 hidden w-full md:flex md:w-auto md:order-none md:justify-end">
-            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to={isLogin?"/doctors":"/login"}  style={{display:isUserVerified?"flex":"none"}}>Doctors</Link>
+          <div className="order-3 hidden w-full md:flex md:w-auto md:order-none md:justify-end items-center">
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to="/contact">Contact</Link>
-            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to="/QuestionsPage">Q/A</Link>
+            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " style={{display:isLogin&&isEmailVerified?"flex":"none"}} target="" rel="" to="/QuestionsPage">Q/A</Link>
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to={`/${userTypeInStr}/dashboard`} style={{display:isDashBoardEnable?"flex":"none"}}>Dashboard</Link>
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to="/login" style={{display:isLogin?"none":"flex"}}>Login</Link>
-            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to="/register" style={{display:isLogin?"none":"flex"}}>Signup</Link>
+            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to="/register" style={{display:isLogin?"none":"flex"}}>Doctor Signup</Link>
+            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to="/register-as-a-user" style={{display:isLogin?"none":"flex"}}>Member Signup</Link>
             <p className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " onClick={handleLogOut} style={{display:isLogin&&isEmailVerified?"flex":"none"}}>Logout</p>
           </div>
 
@@ -176,31 +160,24 @@ function Navbar() {
               >
                 Material
               </Link>
-              {isLogin && 
-                <Link
-                  className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
-                  to="https://communities.yourbestself-ie.com/user/auth/login"
-                  onClick={handleMenuToggle}
-                  target='_blank'
-                >
-                  Communities
-                </Link> 
-              }
-              <Link
-                className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
-                to="/pricing"
-                onClick={handleMenuToggle}
-              >
-                Pricing
-              </Link>
-              <Link
+            
+               <Link
                 className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
                 to={isLogin?"/doctors":"/login"}
                 onClick={handleMenuToggle}
                 style={{display:isUserVerified?"flex":"none"}}
               >
                 Doctors
-              </Link>
+              </Link> 
+               <Link
+                className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
+                to={isLogin?"/QuestionsPage":"/login"}
+                onClick={handleMenuToggle}
+                style={{display:isUserVerified?"flex":"none"}}
+              >
+                Q/A
+              </Link> 
+              
               <Link
                 className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
                 to="/contact"
@@ -230,7 +207,15 @@ function Navbar() {
                 onClick={handleMenuToggle}
                 style={{display:isLogin?"none":"flex"}}
               >
-                Signup
+                Doctor Signup
+              </Link>
+              <Link
+                className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] "
+                to="/register-as-a-user"
+                onClick={handleMenuToggle}
+                style={{display:isLogin?"none":"flex"}}
+              >
+                Member Signup
               </Link>
               <p className="my-2 px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72]  " onClick={handleLogOut} style={{display:isLogin?"flex":"none"}}>Logout</p>
             </div>

@@ -23,6 +23,9 @@ const Doctors = () => {
     }
   }, [MasterData]);
 
+  const LoginStatus = useSelector(state => state.handleUserBasicData)
+
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -44,141 +47,150 @@ const Doctors = () => {
         </h2> */}
 
             <div className="grid gap-x-6 gap-y-5 md:gap-y-12 md:grid-cols-3 lg:gap-x-12">
+
               {data.length > 0
-                ? getCurrentPageData().map((member, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="mb-6 lg:mb-0"
-                        onClick={() => navigate(`/post-by/${member._id}`)}
-                      >
-                        <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                          <div
-                            className="relative overflow-hidden bg-cover bg-no-repeat"
-                            style={{ paddingBottom: "100%" }}
-                          >
-                            <LazyLoadImage
-                              src={FILE_URL + member.dp}
-                              effect="blur"
-                              className="absolute  object-cover rounded-lg"
-                              width="100%"
-                              height="50%"
-                            />
-                          </div>
-                          <div className="p-4">
-                            <h3 className="mb-2 text-xl font-semibold">
-                              {member.name}
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">
-                              {member.designantion}
-                            </p>
-                            <div className="flex justify-center mt-4 space-x-4">
-                              {member.socialMedia != null ? (
+                ? getCurrentPageData().filter((member) => {
+                  if (LoginStatus.userType === 1) {
+                    // If userType is 1, only show the data if uid matches the member's _id
+                    return LoginStatus.uid === member._id;
+                  }
+                  // For other userTypes, show all data
+                  return true;
+                }).map((member, index) => {
+
+                  return (
+                    <div
+                      key={index}
+                      className="mb-6 lg:mb-0"
+                      onClick={() => navigate(`/post-by/${member._id}`)}
+                    >
+                      <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                        <div
+                          className="relative overflow-hidden bg-cover bg-no-repeat"
+                          style={{ paddingBottom: "100%" }}
+                        >
+                          <LazyLoadImage
+                            src={FILE_URL + member.dp}
+                            effect="blur"
+                            className="absolute  object-cover rounded-lg"
+                            width="100%"
+                            height="50%"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h3 className="mb-2 text-xl font-semibold">
+                            {member.name}
+                          </h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
+                            {member.designantion}
+                          </p>
+                          <div className="flex justify-center mt-4 space-x-4">
+                            {member.socialMedia != null ? (
+                              <div
+                                className="flex justify-end pt-5 gap-4 socials"
+                                style={{
+                                  display:
+                                    member.socialMedia != null
+                                      ? "flex"
+                                      : "none",
+                                }}
+                              >
                                 <div
-                                  className="flex justify-end pt-5 gap-4 socials"
+                                  className="relative overflow-hidden block footer-div cursor-pointer"
                                   style={{
                                     display:
-                                      member.socialMedia != null
-                                        ? "flex"
+                                      member.socialMedia.linkden != null
+                                        ? "block"
                                         : "none",
                                   }}
                                 >
-                                  <div
-                                    className="relative overflow-hidden block footer-div cursor-pointer"
-                                    style={{
-                                      display:
+                                  <span className="block">
+                                    <a
+                                      target="_blank"
+                                      href={
                                         member.socialMedia.linkden != null
-                                          ? "block"
-                                          : "none",
-                                    }}
-                                  >
-                                    <span className="block">
-                                      <a
-                                        target="_blank"
-                                        href={
-                                          member.socialMedia.linkden != null
-                                            ? member.socialMedia.linkden
-                                            : ""
-                                        }
-                                      >
-                                        <FaLinkedinIn className="social-links text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8" />
-                                      </a>
-                                    </span>
-                                  </div>
-                                  <div
-                                    className="relative overflow-hidden block footer-div cursor-pointer"
-                                    style={{
-                                      display:
-                                        member.socialMedia.mail != null
-                                          ? "block"
-                                          : "none",
-                                    }}
-                                  >
-                                    <span className="block">
-                                      <a
-                                        target="_blank"
-                                        href={
-                                          member.socialMedia.mail != null
-                                            ? `mailto:${member.socialMedia.mail}`
-                                            : ""
-                                        }
-                                      >
-                                        <i className="social-links fa-solid fa-envelope text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8"></i>
-                                      </a>
-                                    </span>
-                                  </div>
-                                  <div
-                                    className="relative overflow-hidden block footer-div cursor-pointer"
-                                    style={{
-                                      display:
-                                        member.socialMedia.facebook != null
-                                          ? "block"
-                                          : "none",
-                                    }}
-                                  >
-                                    <span className="block">
-                                      <a
-                                        target="_blank"
-                                        href={
-                                          member.socialMedia.facebook != null
-                                            ? member.socialMedia.facebook
-                                            : ""
-                                        }
-                                      >
-                                        <i className=" social-links fa-brands fa-facebook text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8"></i>
-                                      </a>
-                                    </span>
-                                  </div>
-                                  <div
-                                    className="relative overflow-hidden block footer-div cursor-pointer"
-                                    style={{
-                                      display:
-                                        member.socialMedia.twiter != null
-                                          ? "block"
-                                          : "none",
-                                    }}
-                                  >
-                                    <span className="block">
-                                      <a
-                                        target="_blank"
-                                        href={
-                                          member.socialMedia.twiter != null
-                                            ? member.socialMedia.twiter
-                                            : ""
-                                        }
-                                      >
-                                        <FiTwitter className="social-links text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8" />
-                                      </a>
-                                    </span>
-                                  </div>
+                                          ? member.socialMedia.linkden
+                                          : ""
+                                      }
+                                    >
+                                      <FaLinkedinIn className="social-links text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8" />
+                                    </a>
+                                  </span>
                                 </div>
-                              ) : null}
-                            </div>
+                                <div
+                                  className="relative overflow-hidden block footer-div cursor-pointer"
+                                  style={{
+                                    display:
+                                      member.socialMedia.mail != null
+                                        ? "block"
+                                        : "none",
+                                  }}
+                                >
+                                  <span className="block">
+                                    <a
+                                      target="_blank"
+                                      href={
+                                        member.socialMedia.mail != null
+                                          ? `mailto:${member.socialMedia.mail}`
+                                          : ""
+                                      }
+                                    >
+                                      <i className="social-links fa-solid fa-envelope text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8"></i>
+                                    </a>
+                                  </span>
+                                </div>
+                                <div
+                                  className="relative overflow-hidden block footer-div cursor-pointer"
+                                  style={{
+                                    display:
+                                      member.socialMedia.facebook != null
+                                        ? "block"
+                                        : "none",
+                                  }}
+                                >
+                                  <span className="block">
+                                    <a
+                                      target="_blank"
+                                      href={
+                                        member.socialMedia.facebook != null
+                                          ? member.socialMedia.facebook
+                                          : ""
+                                      }
+                                    >
+                                      <i className=" social-links fa-brands fa-facebook text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8"></i>
+                                    </a>
+                                  </span>
+                                </div>
+                                <div
+                                  className="relative overflow-hidden block footer-div cursor-pointer"
+                                  style={{
+                                    display:
+                                      member.socialMedia.twiter != null
+                                        ? "block"
+                                        : "none",
+                                  }}
+                                >
+                                  <span className="block">
+                                    <a
+                                      target="_blank"
+                                      href={
+                                        member.socialMedia.twiter != null
+                                          ? member.socialMedia.twiter
+                                          : ""
+                                      }
+                                    >
+                                      <FiTwitter className="social-links text-white bg-[#7963a7] rounded-full leading-4 p-2 h-8 w-8" />
+                                    </a>
+                                  </span>
+                                </div>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                       </div>
-                    );
-                  })
+                    </div>
+                  );
+                })
                 : null}
             </div>
           </section>
@@ -192,8 +204,8 @@ const Doctors = () => {
         >
           <button
             className="relative inline-flex items-center gap-1 rounded-l-md border border-gray-300 bg-white px-3 py-2 pr-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 disabled:pointer-events-none disabled:opacity-40 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300"
-            onClick={()=>{handlePageChange(currentPage-1)}}
-            disabled={currentPage==1?true:false}
+            onClick={() => { handlePageChange(currentPage - 1) }}
+            disabled={currentPage == 1 ? true : false}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -218,18 +230,17 @@ const Doctors = () => {
               <button
                 key={index}
                 onClick={() => handlePageChange(index + 1)}
-                className={`mx-1 px-3 py-2 rounded ${
-                  currentPage === index + 1
-                    ? "bg-gray-200 text-black"
-                    : "bg-white text-gray-200"
-                }`}
+                className={`mx-1 px-3 py-2 rounded ${currentPage === index + 1
+                  ? "bg-gray-200 text-black"
+                  : "bg-white text-gray-200"
+                  }`}
               >
                 {index + 1}
               </button>
             ))}
           </div>
 
-          <button disabled={totalPages==currentPage?true:false} onClick={()=>{handlePageChange(currentPage+1)}} className="relative inline-flex items-center gap-1 rounded-r-md border border-gray-300 bg-white px-3 py-2 pl-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 disabled:pointer-events-none disabled:opacity-40 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300">
+          <button disabled={totalPages == currentPage ? true : false} onClick={() => { handlePageChange(currentPage + 1) }} className="relative inline-flex items-center gap-1 rounded-r-md border border-gray-300 bg-white px-3 py-2 pl-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 disabled:pointer-events-none disabled:opacity-40 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300">
             <span>Next</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -27,7 +27,7 @@ function CreatePost() {
   const [categories, setCategories] = useState(masterData.categroies);
   const Dispatch = useDispatch();
 
-  useLayoutEffect(() => {});
+  useLayoutEffect(() => { });
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -77,18 +77,18 @@ function CreatePost() {
       body: fd,
     }).then((res) => {
       if (res.ok) {
-        fetch(PostCreated,{
-          method:"POST",
-          headers:JSON_HEADER,
-          body:JSON.stringify({_id:basicData.uid})
-        }).then(d=>{
-          fetch(UserHandler,{
-            method:"POST",
-            headers:JSON_HEADER,
-            body:JSON.stringify({_id:basicData.uid})
-          }).then(d=>{
-            if(d.ok){
-              d.json().then(d=>{
+        fetch(PostCreated, {
+          method: "POST",
+          headers: JSON_HEADER,
+          body: JSON.stringify({ _id: basicData.uid })
+        }).then(d => {
+          fetch(UserHandler, {
+            method: "POST",
+            headers: JSON_HEADER,
+            body: JSON.stringify({ _id: basicData.uid })
+          }).then(d => {
+            if (d.ok) {
+              d.json().then(d => {
                 Dispatch(setUserData(d.data))
               })
             }
@@ -118,113 +118,120 @@ function CreatePost() {
           <div className="w-full ">
             <div className="py-4 px-2">
               <div className="bg-white rounded shadow mt-7 py-7">
-                <div className="mt-10 px-7">
-                  <p className="text-xl font-semibold leading-tight text-gray-800">
-                    Create New Post
-                  </p>
-                  <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
-                    <div>
-                      <p className="text-base font-medium leading-none text-gray-800">
-                        Title
-                      </p>
-                      <input
-                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        value={title}
-                        onChange={handleTitleChange}
-                      />
-                      <p className="mt-3 text-xs leading-3 text-gray-600">
-                        Set a simple and precise title
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-base font-medium leading-none text-gray-800">
-                        Slug
-                      </p>
-                      <input
-                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        value={slug}
-                        onChange={handleSlugChange}
-                      />
-                      <p className="mt-3 text-xs leading-[15px] text-gray-600">
-                        Set Slug that is related to the Post
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-base font-medium leading-none text-gray-800">
-                        Category
-                      </p>
-                      <select
-                        className="w-full p-4 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        value={categoryName}
-                        onChange={handleCategoryChange}
-                      >
-                        <option value="">Select category</option>
-                        {categories.map((item, index) => {
-                          return (
-                            <option key={index} value={item.name}>
-                              {item.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      <p className="mt-3 text-xs leading-[15px] text-gray-600">
-                        Select a category for your post
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-base font-medium leading-none text-gray-800">
-                        Image1
-                      </p>
-                      <input
-                        accept="image/*"
-                        type="file"
-                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        onChange={handleImage1Change}
-                      />
-                      <p className="mt-3 text-xs leading-[15px] text-gray-600">
-                        Set the main image for the Post with a 1:1 Ratio
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-base font-medium leading-none text-gray-800">
-                        Image2
-                      </p>
-                      <input
-                        accept="image/*"
-                        type="file"
-                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        onChange={handleImage2Change}
-                      />
-                      <p className="mt-3 text-xs leading-[15px] text-gray-600">
-                        Set a high-quality image for your post
-                      </p>
+                <form onSubmit={handleFormSubmit}>
+                  <div className="mt-10 px-7">
+                    <p className="text-xl font-semibold leading-tight text-gray-800">
+                      Create New Post
+                    </p>
+
+                    <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+                      <div>
+                        <p className="text-base font-medium leading-none text-gray-800">
+                          Title
+                        </p>
+                        <input
+                          className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                          value={title}
+                          required
+                          onChange={handleTitleChange}
+                        />
+                        <p className="mt-3 text-xs leading-3 text-gray-600">
+                          Set a simple and precise title
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-base font-medium leading-none text-gray-800">
+                          Slug
+                        </p>
+                        <input
+                          className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                          value={slug}
+                          required
+                          onChange={handleSlugChange}
+                        />
+                        <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                          Set Slug and remember slug must be unique 
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-base font-medium leading-none text-gray-800">
+                          Category
+                        </p>
+                        <select
+                          className="w-full p-4 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                          value={categoryName}
+                          required
+                          onChange={handleCategoryChange}
+                        >
+                          <option value="">Select category</option>
+                          {categories.map((item, index) => {
+                            return (
+                              <option key={index} value={item.name}>
+                                {item.name}
+                              </option>
+                            );
+                          })}
+                        </select>
+                        <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                          Select a category for your post
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-base font-medium leading-none text-gray-800">
+                          Image1
+                        </p>
+                        <input
+                          accept="image/*"
+                          type="file"
+                          className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                          onChange={handleImage1Change}
+                        />
+                        <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                          Set the main image for the Post with a 1:1 Ratio
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-base font-medium leading-none text-gray-800">
+                          Image2
+                        </p>
+                        <input
+                          accept="image/*"
+                          type="file"
+                          className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                          onChange={handleImage2Change}
+                        />
+                        <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                          Set a high-quality image for your post
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="pt-6 border-gray-300 mt-2 px-7">
-                  <p className="text-base font-semibold leading-4 text-gray-800">
-                    Description
+                  <div className="pt-6 border-gray-300 mt-2 px-7">
+                    <p className="text-base font-semibold leading-4 text-gray-800">
+                      Description
+                    </p>
+                    <TextEditor placeholder={"Description"} setDesc={(d) => { setDesc(d); console.log(d); }} />
+                  </div>
+                  <p className="mt-3 text-xs leading-[15px] text-gray-600 px-7">
+                    Enter product meta description for better understanding
                   </p>
-                  <TextEditor placeholder={"Description"} setDesc={(d)=>{setDesc(d);console.log(d);}} />
-                </div>
-                <p className="mt-3 text-xs leading-[15px] text-gray-600 px-7">
-                  Enter product meta description for better understanding
-                </p>
-                <hr className="h-[1px] bg-gray-100 my-14" />
-                <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                  <button
-                    onClick={() => navigate("/doctor/posts")}
-                    className="bg-white border-[#452a72] rounded hover:bg-[#452a72] transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-[#452a72] hover:text-white border lg:max-w-[95px]  w-full "
-                  >
-                    Back
-                  </button>
-                  <button
-                    onClick={handleFormSubmit}
-                    className="bg-[#452a72] rounded hover:bg-transparent border border-[#452a72] transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white hover:text-[#452a72] lg:max-w-[144px] w-full  "
-                  >
-                    Create
-                  </button>
-                </div>
+                  <hr className="h-[1px] bg-gray-100 my-14" />
+                  <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
+                    <button
+                      onClick={() => navigate("/doctor/posts")}
+                      className="bg-white border-[#452a72] rounded hover:bg-[#452a72] transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-[#452a72] hover:text-white border lg:max-w-[95px]  w-full "
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      // onClick={handleFormSubmit}
+                      className="bg-[#452a72] rounded hover:bg-transparent border border-[#452a72] transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white hover:text-[#452a72] lg:max-w-[144px] w-full  "
+                    >
+                      Create
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

@@ -4,6 +4,9 @@ import handleUserData from "./UserData";
 import handleUserBasicData from "./UserbasicData";
 import handleUserPosts from "./UserPost";
 import handlePosts from "./Posts";
+import Notes from "./Notes";
+import QandA from "./Quetions";
+import Insta from "./Insta";
 
 
 
@@ -12,7 +15,10 @@ const rootReducer=combineReducers({
     handleUserData,
     handleUserBasicData,
     handleUserPosts,
-    handlePosts
+    handlePosts,
+    Notes,
+    QandA,
+    Insta
 })
 
 export default rootReducer;

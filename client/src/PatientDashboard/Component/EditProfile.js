@@ -206,7 +206,6 @@ function PatientEditProfile() {
                           accept="image/*"
                           type="file"
                           className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                          value={photo}
                           onChange={(e) => {setPhoto(e.target.files[0]);setDpUpdate(true)}}
                         />
                         <p className="mt-3 text-xs leading-[15px] text-gray-600">

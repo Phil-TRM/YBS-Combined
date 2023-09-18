@@ -39,6 +39,7 @@ const AskedQuestionTable = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 
+    console.log(askQuestions)
     useLayoutEffect(()=>{
         if(Repiled.length>0){
             setAskQuestions(Repiled)
@@ -98,7 +99,7 @@ const AskedQuestionTable = () => {
     let displayedPosts = sortedPosts;
     if (currentFilter !== 'all') {
         displayedPosts = sortedPosts.filter(
-            (post) => post.status === currentFilter
+            (post) => post.status === parseInt(currentFilter)
         );
     }
 
@@ -139,21 +140,21 @@ const AskedQuestionTable = () => {
                         All
                     </button>
                     <button
-                        className={`px-4 py-2 text-sm font-medium ${currentFilter === '0' ? 'bg-[#452a72] text-white' : 'text-[#452a72]'
+                        className={`px-4 py-2 text-sm font-medium ${currentFilter === "0" ? 'bg-[#452a72] text-white' : 'text-[#452a72]'
                             } focus:outline-none`}
                         onClick={() => handleFilter("0")}
                     >
                         Pending
                     </button>
                     <button
-                        className={`px-4 py-2 text-sm font-medium ${currentFilter === '1' ? 'bg-[#452a72] text-white' : 'text-[#452a72]'
+                        className={`px-4 py-2 text-sm font-medium ${currentFilter ==="1" ? 'bg-[#452a72] text-white' : 'text-[#452a72]'
                             } focus:outline-none`}
                         onClick={() => handleFilter("1")}
                     >
                         Confirm
                     </button>
                     <button
-                        className={`px-4 py-2 text-sm font-medium ${currentFilter === '2' ? 'bg-[#452a72] text-white' : 'text-[#452a72]'
+                        className={`px-4 py-2 text-sm font-medium ${currentFilter === "2" ? 'bg-[#452a72] text-white' : 'text-[#452a72]'
                             } rounded-r-md focus:outline-none`}
                         onClick={() => handleFilter("2")}
                     >
@@ -235,7 +236,7 @@ const AskedQuestionTable = () => {
 
                             <td className="px-7 2xl:px-0">
 
-                                {post.status === "0" ?
+                                {post.status === 0 ?
                                     (
                                         <>
                                             <Tooltip content="reject Post" >
@@ -251,7 +252,7 @@ const AskedQuestionTable = () => {
                                         </>
 
                                     )
-                                    : post.status === "1" && null
+                                    : post.status === 1 && null
                                 }
 
                             </td>

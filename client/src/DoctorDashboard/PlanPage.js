@@ -46,7 +46,7 @@ const navigate =  useNavigate();
 
   useLayoutEffect(() => {
     if (MasterData.prices != null) {
-      setPrices(MasterData.prices);
+      setPrices(MasterData?.prices);
     } else {
       setPrices(new Array());
     }
@@ -74,7 +74,7 @@ const navigate =  useNavigate();
     fetch(PlanDetails, {
       method: "POST",
       headers: JSON_HEADER,
-      body: JSON.stringify({ pid: plans.planId }),
+      body: JSON.stringify({ pid: plans?.planId }),
     }).then((res) => {
       if (res.ok) {
         res.json().then((d) => {
@@ -86,8 +86,8 @@ const navigate =  useNavigate();
     });
   };
   const calulatetime = () => {
-    let date = moment(formatDate(plans.from), "DD MMM, YYYY").add(
-      plans.validity,
+    let date = moment(formatDate(plans?.from), "DD MMM, YYYY").add(
+      plans?.validity,
       "days"
     );
     setExpireDate(formatDate(date));
@@ -99,7 +99,7 @@ const navigate =  useNavigate();
       fetch(PlanExpired, {
         method: "POST",
         headers: JSON_HEADER,
-        body: JSON.stringify({ _id: UserData._id }),
+        body: JSON.stringify({ _id: UserData?._id }),
       });
     }else
     {
@@ -147,7 +147,7 @@ const navigate =  useNavigate();
   const handleUserCreation = () => {
     let trans = {
       transId: orderID,
-      email: userData.email,
+      email: userData?.email,
       pid: plan,
     };
     fetch(Historyhandlers, {
@@ -176,7 +176,7 @@ const navigate =  useNavigate();
                   </h1>
                   <div className="flex flex-col md:flex-row items-start md:items-center">
                     <div className="mt-4 lg:mt-0 mr-0 xl:mr-8 text-sm bg-[#bac3df] text-[#452a72] dark:text-[#452a72] rounded font-medium py-2 w-48 flex justify-center">{`Start Date: ${formatDate(
-                      plans.from
+                      plans?.from
                     )}`}</div>
                     <div className="mt-4 lg:mt-0 mr-0 lg:mr-4 xl:mr-8 text-sm bg-red-100 text-red-500 rounded font-medium py-2 w-48 flex justify-center">{`End Date: ${expireDate}`}</div>
                   </div>
@@ -193,11 +193,11 @@ const navigate =  useNavigate();
                       </div>
                       <div className="ml-2">
                         <h5 className="text-gray-800 dark:text-gray-100 font-medium text-base">
-                          {plans.planName}
+                          {plans?.planName}
                         </h5>
                         <p className="text-gray-600 dark:text-gray-400 text-xs font-normal">
                           {" "}
-                          {`Paid- ${planMore.price} $`}{" "}
+                          {`Paid- ${planMore?.price} $`}{" "}
                         </p>
                       </div>
                     </div>
@@ -247,9 +247,9 @@ const navigate =  useNavigate();
                         onChange={(e) => setPlan(e.target.value)}
                       >
                         <option value="0">Choose Plan</option>
-                        {prices.map((price, index) => (
-                          <option value={price._id} key={index}>
-                            {price.validity > 30 ? "Yearly" : "Monthly"}
+                        {prices?.map((price, index) => (
+                          <option value={price?._id} key={index}>
+                            {price?.validity > 30 ? "Yearly" : "Monthly"}
                           </option>
                         ))}
                       </select>
@@ -264,7 +264,7 @@ const navigate =  useNavigate();
                   <div className="lg:pl-8 w-full lg:w-1/2 flex flex-col lg:flex-row items-start lg:items-center">
                     <div className="mr-12 flex lg:block items-center lg:mr-6 xl:mr-12 mt-5 lg:mt-0">
                       <h2 className="text-gray-600 dark:text-gray-400 font-bold text-xl lg:text-2xl leading-6 mb-1 lg:text-center">
-                        {plans.validity}
+                        {plans?.validity}
                       </h2>
                       <p className="ml-2 lg:ml-0 text-gray-800 dark:text-gray-100 text-xl leading-5 text-center">
                         Total Days

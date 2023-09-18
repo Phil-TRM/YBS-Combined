@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 import { Checkbox, Modal, Typography } from "@mui/material";
 import { CLIENT_ID, CheckExits, FILE_URL, Historyhandlers, JSON_HEADER, UserHandler } from "../utils/Const";
-import { handleNewCommunityUser } from "../utils/CreateCommunityUserUtil"
 import { useDispatch, useSelector } from "react-redux";
 import { setUserBasic, setUserData } from "../Redux/Actions";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,7 @@ const Register = () => {
   const [zipcode, setZipcode] = useState("");
   const [certificate, setCertificate] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const [howFind, setHowFind] = useState("");
+  const [howFind, setHowFind] = useState("We Are Team");
   const [plan, setPlan] = useState("");
   const [prices, setPrices] = useState(new Array());
   const [isTerms, setTerms] = useState(false);
@@ -115,7 +114,6 @@ const Register = () => {
   useEffect(() => {
     if (success) {
       NotificationManager.success("Payment successful!!")
-      // handleNewCommunityUser({name, email, password, plan});
       handleUserCreation();
     }
   }, [success]);
@@ -132,7 +130,7 @@ const Register = () => {
       }).then((res) => {
         if (res.ok) {
           NotificationManager.warning("Account already exists please login");
-          setSubmitEnable(false)
+         setSubmitEnable(false)
         }else{
           setSubmitEnable(true)
           throw new Error('Something went wrong');
@@ -453,23 +451,7 @@ const Register = () => {
                     onChange={(e) => setStreetAddress(e.target.value)}
                   />
                 </div>
-                <div className="md:col-span-5">
-                  <label
-                    htmlFor="zipcode"
-                    className="block text-gray-700 text-sm font-semibold mb-2"
-                  >
-                    How you found the website?
-                  </label>
-                  <input
-                    placeholder="How you found website?"
-                    name="howfind"
-                    required
-                    id="zipcode"
-                    className=" focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    value={howFind}
-                    onChange={(e) => setHowFind(e.target.value)}
-                  />
-                </div>
+              
                 <div className="md:col-span-5">
                   <label
                     htmlFor="state"

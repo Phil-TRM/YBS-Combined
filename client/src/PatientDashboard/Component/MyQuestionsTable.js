@@ -12,45 +12,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Delete } from '@mui/icons-material';
 import { NotificationManager } from 'react-notifications';
 
-const status = ["Pending","Confirmed","Rejected"]
+const status = ["Pending", "Confirmed", "Rejected"]
 
 const MyQuestionsTable = () => {
-    const Basic =  useSelector(state=>state.handleUserBasicData);
-    const Questions =  useSelector(state=>state.QandA);
+    const Basic = useSelector(state => state.handleUserBasicData);
+    const Questions = useSelector(state => state.QandA);
     const Dispatch = useDispatch();
     const [questions, setQuestionsData] = useState([]);
     const [selectedQuestion, setSelectedQuestion] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const navigate = useNavigate()
 
-    useLayoutEffect(()=>{
-        if(Questions.length>0){
+    useLayoutEffect(() => {
+        if (Questions.length > 0) {
             setQuestionsData(Questions)
-        }else{
-            let data ={
-                uid:Basic.uid
+        } else {
+            let data = {
+                uid: Basic.uid
             }
-            GetQuestionsByUser(data).then(d=>{
-                if(d!=null){
+            GetQuestionsByUser(data).then(d => {
+                if (d != null) {
                     Dispatch(setQuistions(d.data));
-                }else{
+                } else {
                     setQuestionsData([])
                 }
             })
         }
-    },[Questions])
+    }, [Questions])
 
-    const handleDltNote = (id) => { 
-        DeleteQuestions(id).then(d=>{
-            if(d!=null){
+    const handleDltNote = (id) => {
+        DeleteQuestions(id).then(d => {
+            if (d != null) {
                 NotificationManager.success("Deleted")
-                let data ={
-                    uid:Basic.uid
+                let data = {
+                    uid: Basic.uid
                 }
-                GetQuestionsByUser(data).then(d=>{
-                    if(d!=null){
+                GetQuestionsByUser(data).then(d => {
+                    if (d != null) {
                         Dispatch(setQuistions(d.data));
-                    }else{
+                    } else {
                         setQuestionsData([])
                     }
                 })
@@ -79,14 +79,14 @@ const MyQuestionsTable = () => {
                     </tr>
                 </thead>
                 <tbody className="w-full">
-                    {questions.map((cur,index) => (
+                    {questions.map((cur, index) => (
                         <tr
                             key={cur._id}
                             className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100"
                         >
                             <td className="pl-8">
                                 <p className="text-sm font-medium leading-none text-gray-800">
-                                    Que {index+1}.
+                                    Que {index + 1}.
                                 </p>
                             </td>
                             <td className="px-0 2xl:px-0 mt-4 flex justify-center items-center">
@@ -120,26 +120,24 @@ const MyQuestionsTable = () => {
                                     {FormatDate(cur.createdAt)}
                                 </p>
                             </td>
-                           
+
                             <td className="px-7 2xl:px-0">
-                                <Tooltip content="Edit Que">
-                                    <IconButton
-                                        variant="text"
-                                        color="blue-gray"
-                                        onClick={() => handleEditNote(cur._id)}
-                                    >
-                                        <PencilIcon className="h-5 w-5" />
-                                    </IconButton>
-                                </Tooltip>
-                                <Tooltip content="Delete Que">
-                                    <IconButton
-                                        variant="text"
-                                        color="blue-gray"
-                                        onClick={() => handleDltNote(cur._id)}
-                                    >
-                                        <TrashIcon className="h-5 w-5" />
-                                    </IconButton>
-                                </Tooltip>
+                                {cur.status === 0 && (
+                                    <>
+                                        
+                                        <Tooltip content="Delete Que">
+                                            <IconButton
+                                                variant="text"
+                                                color="blue-gray"
+                                                onClick={() => handleDltNote(cur._id)}
+                                            >
+                                                <TrashIcon className="h-5 w-5" />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </>
+
+                                )}
+
                             </td>
                         </tr>
                     ))}
@@ -147,7 +145,7 @@ const MyQuestionsTable = () => {
             </table>
             <Dialog open={isDialogOpen} onClose={handleToggleDialog}>
                 <DialogContent>
-                   Q. {selectedQuestion && questions.find(note => note._id === selectedQuestion).question}
+                    Q. {selectedQuestion && questions.find(note => note._id === selectedQuestion).question}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleToggleDialog}>Close</Button>

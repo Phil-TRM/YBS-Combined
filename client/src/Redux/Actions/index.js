@@ -28,3 +28,21 @@ export const setPosts=(data)=>{
         data:data
     }
 }
+export const setNotes=(data)=>{
+    return{
+        type:"SET_NOTES",
+        data:data
+    }
+}
+export const setInstas=(data)=>{
+    return{
+        type:"SET_INSTA",
+        data:data
+    }
+}
+export const setQuistions=(data)=>{
+    return{
+        type:"SET_QUA",
+        data:data
+    }
+}

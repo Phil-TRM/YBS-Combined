@@ -148,7 +148,7 @@ export default function PatientDashboard() {
                     </div>
 
                 </div>
-                <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                {/* <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
                     <div className="flex  justify-between items-center relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 p-6">
                         <h6 className="block antialiased tracking-normal text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">
                             Notifications
@@ -185,7 +185,7 @@ export default function PatientDashboard() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
 
             </div>
 
