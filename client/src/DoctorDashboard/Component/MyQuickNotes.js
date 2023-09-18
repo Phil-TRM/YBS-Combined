@@ -75,7 +75,7 @@ const MyQuickNotes = () => {
                     <tr className="h-16 w-full text-sm leading-none text-gray-800">
                         <th className="font-normal text-left pl-4">Quick Note</th>
                         <th className="font-normal text-left pl-12">Description</th>
-                        <th className="font-normal text-left pl-12">Status</th>
+                        {/* <th className="font-normal text-left pl-12">Status</th> */}
                         <th className="font-normal text-left pl-12">Created At</th>
                         <th className="font-normal text-left pl-12">Updated At</th>
                     </tr>
@@ -121,11 +121,11 @@ const MyQuickNotes = () => {
                                     </IconButton>
                                 </Tooltip>
                             </td>
-                            <td className="pl-12">
+                            {/* <td className="pl-12">
                                 <p className="text-sm font-medium leading-none text-gray-800">
                                     {STATUS[note.status]}
                                 </p>
-                            </td>
+                            </td> */}
 
                             <td className="pl-12">
                                 <p className="text-sm font-medium leading-none text-gray-800">
@@ -138,7 +138,7 @@ const MyQuickNotes = () => {
                                 </p>
                             </td>
                             <td className="px-7 2xl:px-0">
-                                <Tooltip content="Edit Post">
+                                {/* <Tooltip content="Edit Post">
                                     <IconButton
                                         variant="text"
                                         color="blue-gray"
@@ -146,8 +146,8 @@ const MyQuickNotes = () => {
                                     >
                                         <PencilIcon className="h-5 w-5" />
                                     </IconButton>
-                                </Tooltip>
-                                <Tooltip content="Delete Post">
+                                </Tooltip> */}
+                                {/* <Tooltip content="Delete Post">
                                     <IconButton
                                         variant="text"
                                         color="blue-gray"
@@ -155,7 +155,7 @@ const MyQuickNotes = () => {
                                     >
                                         <TrashIcon className="h-5 w-5" />
                                     </IconButton>
-                                </Tooltip>
+                                </Tooltip> */}
                             </td>
                         </tr>
                     ))}

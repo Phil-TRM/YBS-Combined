@@ -93,7 +93,7 @@ const InstagramTable = () => {
                             </td>
                             
                             <td className="px-7 2xl:px-0">
-                                <Tooltip content="Edit Post">
+                                {/* <Tooltip content="Edit Post">
                                     <IconButton
                                         variant="text"
                                         color="blue-gray"
@@ -101,7 +101,7 @@ const InstagramTable = () => {
                                     >
                                         <PencilIcon className="h-5 w-5" />
                                     </IconButton>
-                                </Tooltip>
+                                </Tooltip> */}
                                 <Tooltip content="Delete Post">
                                     <IconButton
                                         variant="text"
