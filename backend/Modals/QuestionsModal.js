@@ -1,11 +1,14 @@
 const { Schema, model } = require("mongoose");
 module.exports = model(
-  "ntifications",
+  "questions",
   Schema(
     {
       uid: String,
-      title: String,
-      to: String,
+      question: String,
+      cateId:String,
+      cateName:String,
+      isAnsweringEnabled:Boolean,
+      status:Number,
     },
     { timestamps: true }
   )

@@ -1,13 +1,12 @@
 const { Schema, model } = require("mongoose");
 module.exports = model(
-  "pricehistories",
+  "questionreplies",
   Schema(
     {
-      pid: String,
-      email: String,
-      transId:String,
-      price: Number,
-      validity: String,
+      qid: String,
+      uid: String,
+      answer: String,
+      status: Number,
     },
     { timestamps: true }
   )

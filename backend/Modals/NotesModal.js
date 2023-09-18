@@ -1,11 +1,16 @@
 const { Schema, model } = require("mongoose");
 module.exports = model(
-  "ntifications",
+  "notes",
   Schema(
     {
       uid: String,
+      userName:String,
       title: String,
-      to: String,
+      para: String,
+      cateId:String,
+      cateName:String,
+      imgUrl:String,
+      status:Number,
     },
     { timestamps: true }
   )
