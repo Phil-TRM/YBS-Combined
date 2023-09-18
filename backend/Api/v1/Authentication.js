@@ -294,7 +294,7 @@ router.post("/community-login", async (req, res) => {
     loginCommunityUser(req.body).then(res => res);
   } catch (error) {
     console.log(error);
-    res.status(500).send({ error: "Some Error" });
+    res.status(500).send({ error: "An Error occured while retrieving the authentication from the community site" });
   }
 });
 router.post("/reset-password", async (req, res) => {
