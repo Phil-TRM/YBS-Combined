@@ -30,12 +30,11 @@ function Navbar() {
     }
 
     switch(LoginStatus.userType){
-      case 0 : setDashboard(false);
+      case 0 : setUserTypeInStr("patient");
       break
-      case 1 : setDashboard(true);
+      case 1 : setUserTypeInStr("doctor");
       break
       case 2: {
-        setDashboard(true);
         setUserTypeInStr("admin");
       }
       break
@@ -132,6 +131,7 @@ function Navbar() {
           <div className="order-3 hidden w-full md:flex md:w-auto md:order-none md:justify-end">
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to={isLogin?"/doctors":"/login"}  style={{display:isUserVerified?"flex":"none"}}>Doctors</Link>
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to="/contact">Contact</Link>
+            <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " target="" rel="" to="/QuestionsPage">Q/A</Link>
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to={`/${userTypeInStr}/dashboard`} style={{display:isDashBoardEnable?"flex":"none"}}>Dashboard</Link>
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to="/login" style={{display:isLogin?"none":"flex"}}>Login</Link>
             <Link className="px-5 py-2 text-sm font-medium text-gray-600 hover:text-[#452a72] " to="/register" style={{display:isLogin?"none":"flex"}}>Signup</Link>
