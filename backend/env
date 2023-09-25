@@ -1,0 +1,11 @@
+CONNECT_TO_DB=mongodb://127.0.0.1:27017/
+API_VERSION="/api/v1/"
+#CLINT_URL='http://172.25.149.155'
+CLINT_URL='http://localhost:3000'
+#CLINT_URL='http://sanzdesk.co'
+
+#EMAIL
+SMTP_Service="gmail"
+SMTP_MAIL=""
+SMTP_PASSWORD=""
+
