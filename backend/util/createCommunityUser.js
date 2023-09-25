@@ -8,7 +8,6 @@ const JSON_HEADER = {
     //'Authorization':'Bearer 555K39SraU5vpwpxMOhW7Ng1bKd4PAoyGY_6Z64uqNY9WQvTNfDsxJWLVH9f0XIiuD1riq_N3F1jhIAnqy2ny4' //local
     'Authorization': 'Bearer YFLDucNdLftF-9xoIH4gTl_60pfQ_5bMTcM2EHJubotEQubitUHN3kgEQYeg9vIvHbMvxZKRapKbIVTgqgak21' //Prod
     //Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjF9.Mn6cszhST9AsM3xZPfEW8xazB5opirFVkUFOmJf-iso" //Prod JWT???
-    //Authorization: "Basic phil@thereganmethod.com:Pwd!7707"
 }
 
 //console.log('starting createCommunityUser call')
