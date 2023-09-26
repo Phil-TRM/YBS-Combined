@@ -107,16 +107,9 @@ router.post("/community-user", async (req, res) => {
       });
       return;
     }
-
-    let data = req.body;
-    //data.status = 0; 
-    //bcrypt.genSalt().then((salt) => {
-    //  bcrypt.hash(password.newPassword, salt).then(async (hash) => {
-    //    req.body.password.newPassword = hash;
-        createCommunityUser(req.body).then(res => res)
-    //  });
-    //});
+    createCommunityUser(req.body).then(res => res)
   } catch (error) {
+    console.log("Error", error)
     res.sendStatus(500);
   }
 });

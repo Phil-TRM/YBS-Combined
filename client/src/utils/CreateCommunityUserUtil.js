@@ -14,13 +14,12 @@ const formatUserData = (data) => {
     
     return  data = {
       account: {
-        username: name, //do we have username data //username is just a string, so we can use name
+        username: email, //do we have username data //username is just a string, so we can use name
         email,
         status: 1,
         tagsField : [
             accountType //default to Users Group. Only create an account in Doctors group if userType=1
         ],
-        language: "EN", //default to English for now
         authclient: "local",
       },
       profile: {
