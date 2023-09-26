@@ -107,7 +107,6 @@ router.post("/community-user", async (req, res) => {
       });
       return;
     }
-    console.log('here')
     createCommunityUser(req.body).then(res => res)
   } catch (error) {
     console.log("Error", error)
