@@ -109,13 +109,13 @@ router.post("/community-user", async (req, res) => {
     }
 
     let data = req.body;
-    data.status = 0;
-    bcrypt.genSalt().then((salt) => {
-      bcrypt.hash(password.newPassword, salt).then(async (hash) => {
-        req.body.password.newPassword = hash;
+    //data.status = 0; 
+    //bcrypt.genSalt().then((salt) => {
+    //  bcrypt.hash(password.newPassword, salt).then(async (hash) => {
+    //    req.body.password.newPassword = hash;
         createCommunityUser(req.body).then(res => res)
-      });
-    });
+    //  });
+    //});
   } catch (error) {
     res.sendStatus(500);
   }
@@ -264,12 +264,12 @@ router.post("/login", async (req, res) => {
             if (data != null) {
               data.password = undefined;
               res.send({ data: data });
-              await SendMail({
-                email: data.email,
-                subject: "Login Confirmation for Your Best SELF-IE",
-                message:
-                  "We are delighted to inform you that your login to Your Best SELF-IE was successful! Welcome back to our platform.",
-              });
+              //await SendMail({
+              //  email: data.email,
+              //  subject: "Login Confirmation for Your Best SELF-IE",
+              //  message:
+              //    "We are delighted to inform you that your login to Your Best SELF-IE was successful! Welcome back to our platform.",
+              //});
             } else {
               res.status(401).send({ message: "Not Found" });
             }
